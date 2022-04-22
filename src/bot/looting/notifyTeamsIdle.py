@@ -1,7 +1,7 @@
 """
 Notify a user where they have available looting teams sitting idle
 """
-
+from src.common.config import notifications
 from src.common.logger import logger
 from src.common.txLogger import txLogger, logTx
 from src.helpers.instantMessage import sendIM
@@ -34,6 +34,7 @@ def notifyTeamsIdle(user: User) -> int:
         # Send a notification of the idle team
         teamId = t["team_id"]
         logger.info(f"Team {teamId} is sitting idle! Go start the loot... 🦀")
-        sendIM(f"Team {teamId} is sitting idle! Go start the loot... 🦀", forceSend=True, disableNotifications=False);
+        if (notifications["instantMessage"]["onNotifyIdle"]):
+            sendIM(f"Team {teamId} is sitting idle! Go start the loot... 🦀", forceSend=True, disableNotifications=False);
 
     return nIdleTeams
